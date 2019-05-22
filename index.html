@@ -1,0 +1,934 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous"/>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" integrity="sha384-XdYbMnZ/QjLh6iI4ogqCTaIjrFk87ip+ekIjefZch0Y+PvJ8CDYtEs1ipDmPorQ+" crossorigin="anonymous">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/react/16.8.6/umd/react.production.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/16.8.6/umd/react-dom.production.min.js"></script>   
+  <script src=" https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  <link rel="stylesheet" href="/style.css">
+  <script type="text/babel">
+var arr=[]; var arr2=[]; var tp=0; var bp=0; var cert2= []; var ansa=["Front End", "Data Visualization", "Back End"];
+
+for(var m=0; m<200; m++){
+  for(var n=0; n<20; n++){
+   arr2.push(n) 
+  }
+  arr.push(arr2)
+  arr2=[];
+}
+//arr= arr.reverse();
+
+
+      var skill=25; var cert= 9; var larr=[]; var carr=[]; var my=1;
+      for(var i=0; i<200; i++){
+        for(var p=0; p<20; p++){
+          if(i==197 && p==7 || i==197 && p==8 || i==197 && p==9 || i==197 && p==10 || i==196 && p==7 || i==196 && p==10 || i==195 && p==7 || i==195 && p==10 || i==194 && p==7 || i==194 && p==8 || i==194 && p==9 || i==194 && p==10){
+            carr.push("yellow")
+          }
+          else if(i==196 && p==8 || i==196 && p==9 || i==195 && p==8 || i==195 && p==9){
+            carr.push('red')
+          }
+          else{
+            carr.push('black')
+          }
+        }
+        larr.push(carr);
+        carr=[];
+      }
+      
+      while(cert>0){
+        var aa= Math.floor(Math.random()*200);
+        var ab= Math.floor(Math.random()*20);
+        
+        if(larr[aa][ab]=="black"){
+          if(cert==9||cert==8||cert==7){
+           larr[aa][ab]="cert1";
+          }
+          else if(cert==6||cert==5||cert==4){
+           larr[aa][ab]="cert2";        
+          }
+          else{
+           larr[aa][ab]="cert3"          
+          }
+          
+        cert--
+          
+        }else{
+           
+        } 
+      }
+
+      while(skill>0){
+        var aa= Math.floor(Math.random()*200);
+        var ab= Math.floor(Math.random()*20);     
+        if(larr[aa][ab]=="black"){
+           larr[aa][ab]="skill"+skill 
+ 
+        skill--
+          
+        }else{
+           
+        }
+      }
+      
+      
+      for(var i=0; i<200; i++){
+        for(var p=0; p<20; p++){
+         if(larr[i][p]=="black"){
+           if(Math.random()*1< .1875){
+             larr[i][p]="black";
+           }else{
+             larr[i][p]="none";
+           }
+         }   
+        }
+      }
+
+      while(my>0){
+        var aa= Math.floor(Math.random()*12);
+        var ab= Math.floor(Math.random()*20);     
+        if(larr[aa][ab]=="black" || larr[aa][ab]=="none"){
+           larr[aa][ab]="me"; 
+          tp=aa;
+          bp=ab;
+          //console.log('a is '+aa+' b is '+ab)         
+        my--;
+          
+        }else{
+           
+        }
+      }
+
+
+class MyC extends React.Component{
+  constructor(props){
+    super(props);
+    this.state={
+      level:1, HP: 5000, exp: 0, att:50, cert:0, skills:0, skills2:[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0], cert2: [0,0,0],message:["Welcome to the Dungeon Crawler Game"], layout: larr, tp: tp, bp: bp, count: 0
+    }
+    this.handleChange=this.handleChange.bind(this);
+  }
+  handleChange(event){
+    
+    var t1=0; var t2=0;
+ for(var m=0; m<200; m++){
+  for(var n=0; n<20; n++){
+   if($('#a'+m+'g'+n).css('background-color')=='rgb(0, 128, 0)'){
+      t1=m; t2=n;
+    // console.log('#a'+m+'g'+n)
+   }
+  }
+}   
+//  console.log(t1+" | "+t2)  
+    
+    
+    if(event.keyCode ==37){
+       //console.log('left')
+      if(t2!=0 && larr[t1][t2-1] == 'none'){
+         $('#a'+t1+'g'+t2).css('background', 'none')
+         $('#a'+t1+'g'+t2).html('')        
+         $('#a'+t1+'g'+(t2-1)).css('background', 'green')
+         $('#a'+t1+'g'+(t2-1)).html('<i class="fa fa-trophy" style="font-size:33px; color: white; background: none; padding-left: 9px; padding-top: 5px;"></i>');
+         larr[t1][t2-1] = 'green';
+         larr[t1][t2] = "none";
+        //console.log('none')
+      }
+               
+      else if(t2!=0 &&(larr[t1][t2-1] == 'cert1' || larr[t1][t2-1] == 'cert2' || larr[t1][t2-1] == 'cert3') ){
+        if(this.state.skills!=25){
+          $('.top').html('<p>Sorry, you haven\'t obtained the necessary skills yet!</p>');
+          if($('.sound').html()=='Sound On'){          
+            $('#audio4')[0].play();
+          }
+        var hp= (parseInt(this.state.HP)- Math.random()*10*400).toFixed(2);
+        this.setState({HP:hp}) 
+
+         if(hp<0){
+           $('#mess1').css('display','block');
+    this.setState({level:1, HP: 5000, exp: 0, att:50, cert:0, skills:0, skills2:[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0], cert2: [0,0,0],message:["Welcome to the Dungeon Crawler Game"], layout: larr, tp: tp, bp: bp, count: 0}) 
+           
+         }        
+        }else{
+          
+       
+var word=larr[t1][t2-1];
+var num= word.match(/\d/gi);
+num=parseInt(num.join(''));   
+          
+        var ski= this.state.cert2;
+        ski[num-1]+=1;          
+          
+        if(ski[num-1]==3){
+          $('.top').html('<p>Congratulations, you have obtained the following certification: '+ansa[num-1]+"!</p>");
+          if($('.sound').html()=='Sound On'){          
+            $('#audio3')[0].play();
+          }
+        }else{
+          $('.top').html('<p>You are '+(3-ski[num-1])+" step(s) away from a certification!</p>");
+          if($('.sound').html()=='Sound On'){          
+            $('#audio2')[0].play();
+          }
+        }
+          
+        this.setState({eskills2: ski, cert: parseInt(this.state.cert)+1, exp: parseInt(this.state.exp)+5, att: (parseInt(this.state.att)+Math.random()*1000).toFixed(2),level:parseInt(this.state.level)+1})         
+
+         $('#a'+t1+'g'+t2).css('background', 'none')
+         $('#a'+t1+'g'+t2).html('')        
+         $('#a'+t1+'g'+(t2-1)).css('background', 'green')
+         $('#a'+t1+'g'+(t2-1)).html('<i class="fa fa-trophy" style="font-size:33px; color: white; background: none; padding-left: 9px; padding-top: 5px;"></i>');
+         larr[t1][t2-1] = 'green';
+         larr[t1][t2] = "none";            
+          
+        }
+
+      }  
+  
+      else if(t2!=0 &&(larr[t1][t2-1] == 'skill1' || larr[t1][t2-1] == 'skill2' || larr[t1][t2-1] == 'skill3' || larr[t1][t2-1] == 'skill4' || larr[t1][t2-1] == 'skill5' || larr[t1][t2-1] == 'skill6' || larr[t1][t2-1] == 'skill7' || larr[t1][t2-1] == 'skill8' || larr[t1][t2-1] == 'skill9' || larr[t1][t2-1] == 'skill10' || larr[t1][t2-1] == 'skill11' || larr[t1][t2-1] == 'skill12' || larr[t1][t2-1] == 'skill13' || larr[t1][t2-1] == 'skill14' || larr[t1][t2-1] == 'skill15' || larr[t1][t2-1] == 'skill16' || larr[t1][t2-1] == 'skill17' || larr[t1][t2-1] == 'skill18' || larr[t1][t2-1] == 'skill19' || larr[t1][t2-1] == 'skill20' || larr[t1][t2-1] == 'skill21' || larr[t1][t2-1] == 'skill22' || larr[t1][t2-1] == 'skill23' || larr[t1][t2-1] == 'skill24'  || larr[t1][t2-1] == 'skill25') ){
+        
+var word=larr[t1][t2-1];
+var num= word.match(/\d/gi);
+num=parseInt(num.join(''));
+    $('.top').html('<p>Congratulations, you accomplished Skill '+(num)+"!</p>");
+          if($('.sound').html()=='Sound On'){          
+            $('#audio2')[0].play();
+          }        
+        var ski= this.state.skills2;
+        ski[num-1]= 3;
+
+        this.setState({skills2: ski, skills: parseInt(this.state.skills)+1, exp: parseInt(this.state.exp+1), att: (parseInt(this.state.att)+Math.random()*1000).toFixed(2), level: parseInt(this.state.level+1)});
+
+         $('#a'+t1+'g'+t2).css('background', 'none')
+         $('#a'+t1+'g'+t2).html('')        
+         $('#a'+t1+'g'+(t2-1)).css('background', 'green')
+         $('#a'+t1+'g'+(t2-1)).html('<i class="fa fa-trophy" style="font-size:33px; color: white; background: none; padding-left: 9px; padding-top: 5px;"></i>');
+         larr[t1][t2-1] = 'green';
+         larr[t1][t2] = "none"; 
+        
+      }  
+      else if(t2!=0 &&(larr[t1][t2-1] == 'yellow')){
+         if(this.state.skills!=25 && this.state.cert != 9){
+     $('.top').html('<p>You are not qualified yet to take on the boss!</p>');
+          if($('.sound').html()=='Sound On'){          
+            $('#audio4')[0].play();
+          }
+         }
+         else{
+        $('.top').html('<p>You win!</p>');
+        $('#mess2').css('display','block');           
+               this.setState({level:1, HP: 5000, exp: 0, att:50, cert:0, skills:0, skills2:[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0], cert2: [0,0,0],message:["Welcome to the Dungeon Crawler Game"], layout: larr, tp: tp, bp: bp, count: 0}) 
+           
+         $('#a'+t1+'g'+t2).css('background', 'none')
+         $('#a'+t1+'g'+t2).html('')        
+         $('#a'+t1+'g'+(t2-1)).css('background', 'green')
+         $('#a'+t1+'g'+(t2-1)).html('<i class="fa fa-trophy" style="font-size:33px; color: white; background: none; padding-left: 9px; padding-top: 5px;"></i>');
+         larr[t1][t2-1] = 'green';
+         larr[t1][t2] = "none";             
+         }
+      }      
+      
+        
+    }//keycode left
+
+if(event.keyCode ==39){
+       //console.log('right')
+      if(t2!=19 && larr[t1][t2+1] == 'none'){
+         $('#a'+t1+'g'+t2).css('background', 'none')
+         $('#a'+t1+'g'+t2).html('')        
+         $('#a'+t1+'g'+(t2+1)).css('background', 'green')
+         $('#a'+t1+'g'+(t2+1)).html('<i class="fa fa-trophy" style="font-size:33px; color: white; background: none; padding-left: 9px; padding-top: 5px;"></i>');
+         larr[t1][t2+1] = 'green';
+         larr[t1][t2] = "none";
+      }
+  
+      else if(t2!=19 &&(larr[t1][t2+1] == 'cert1' || larr[t1][t2+1] == 'cert2' || larr[t1][t2+1] == 'cert3') ){
+        if(this.state.skills!=25){
+          $('.top').html('<p>Sorry, you haven\'t obtained the necessary skills yet!</p>');
+          if($('.sound').html()=='Sound On'){          
+            $('#audio4')[0].play();
+          }
+        var hp= (parseInt(this.state.HP)- Math.random()*10*400).toFixed(2);
+        this.setState({HP:hp})                   
+         if(hp<0){
+           $('#mess1').css('display','block');
+    this.setState({level:1, HP: 5000, exp: 0, att:50, cert:0, skills:0, skills2:[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0], cert2: [0,0,0],message:["Welcome to the Dungeon Crawler Game"], layout: larr, tp: tp, bp: bp, count: 0}) 
+           
+         }        
+        }else{
+          
+var word=larr[t1][t2+1];
+var num= word.match(/\d/gi);
+num=parseInt(num.join(''));   
+          
+        var ski= this.state.cert2;
+        ski[num-1]+=1;          
+          
+        if(ski[num-1]==3){
+          $('.top').html('<p>Congratulations, you have obtained the following certification: '+ansa[num-1]+"!</p>");
+          if($('.sound').html()=='Sound On'){          
+            $('#audio3')[0].play();
+          }
+        }else{
+          $('.top').html('<p>You are '+(3-ski[num-1])+" step(s) away from a certification!</p>");
+          if($('.sound').html()=='Sound On'){          
+            $('#audio2')[0].play();
+          }
+        }
+          
+        this.setState({eskills2: ski, cert: parseInt(this.state.cert+1), exp: parseInt(this.state.exp+5), att: (parseInt(this.state.att)+Math.random()*1000).toFixed(2),level:parseInt(this.state.level)+1})         
+         $('#a'+t1+'g'+t2).css('background', 'none')
+         $('#a'+t1+'g'+t2).html('')        
+         $('#a'+t1+'g'+(t2+1)).css('background', 'green')
+         $('#a'+t1+'g'+(t2+1)).html('<i class="fa fa-trophy" style="font-size:33px; color: white; background: none; padding-left: 9px; padding-top: 5px;"></i>');
+         larr[t1][t2+1] = 'green';
+         larr[t1][t2] = "none";   
+        }
+
+      }  
+  
+      else if(t2!=19 &&(larr[t1][t2+1] == 'skill1' || larr[t1][t2+1] == 'skill2' || larr[t1][t2+1] == 'skill3' || larr[t1][t2+1] == 'skill4' || larr[t1][t2+1] == 'skill5' || larr[t1][t2+1] == 'skill6' || larr[t1][t2+1] == 'skill7' || larr[t1][t2+1] == 'skill8' || larr[t1][t2+1] == 'skill9' || larr[t1][t2+1] == 'skill10' || larr[t1][t2+1] == 'skill11' || larr[t1][t2+1] == 'skill12' || larr[t1][t2+1] == 'skill13' || larr[t1][t2+1] == 'skill14' || larr[t1][t2+1] == 'skill15' || larr[t1][t2+1] == 'skill16' || larr[t1][t2+1] == 'skill17' || larr[t1][t2+1] == 'skill18' || larr[t1][t2+1] == 'skill19' || larr[t1][t2+1] == 'skill20' || larr[t1][t2+1] == 'skill21' || larr[t1][t2+1] == 'skill22' || larr[t1][t2+1] == 'skill23' || larr[t1][t2+1] == 'skill24'  || larr[t1][t2+1] == 'skill25') ){
+var word=larr[t1][t2+1];
+var num= word.match(/\d/gi);
+num=parseInt(num.join(''));
+    $('.top').html('<p>Congratulations, you accomplished Skill '+(num)+"!</p>");
+    if($('.sound').html()=='Sound On'){          
+      $('#audio2')[0].play();
+    }
+        var ski= this.state.skills2;
+        ski[num-1]= 3;
+        this.setState({skills2: ski, skills: parseInt(this.state.skills)+1, exp: parseInt(this.state.exp)+1, att: (parseInt(this.state.att)+Math.random()*1000).toFixed(2), level:parseInt(this.state.level)+1})
+         $('#a'+t1+'g'+t2).css('background', 'none')
+         $('#a'+t1+'g'+t2).html('')        
+         $('#a'+t1+'g'+(t2+1)).css('background', 'green')
+         $('#a'+t1+'g'+(t2+1)).html('<i class="fa fa-trophy" style="font-size:33px; color: white; background: none; padding-left: 9px; padding-top: 5px;"></i>');
+         larr[t1][t2+1] = 'green';
+         larr[t1][t2] = "none";          
+      }  
+      else if(t2!=19 &&(larr[t1][t2+1] == 'yellow')){
+         if(this.state.skills!=25 && this.state.cert != 9){
+     $('.top').html('<p>You are not qualified yet to take on the boss!</p>');
+          if($('.sound').html()=='Sound On'){          
+            $('#audio4')[0].play();
+          }
+         }
+         else{
+        $('.top').html('<p>You win!</p>');
+        $('#mess2').css('display','block');           
+               this.setState({level:1, HP: 5000, exp: 0, att:50, cert:0, skills:0, skills2:[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0], cert2: [0,0,0],message:["Welcome to the Dungeon Crawler Game"], layout: larr, tp: tp, bp: bp, count: 0}) 
+           
+         $('#a'+t1+'g'+t2).css('background', 'none')
+         $('#a'+t1+'g'+t2).html('')        
+         $('#a'+t1+'g'+(t2+1)).css('background', 'green')
+         $('#a'+t1+'g'+(t2+1)).html('<i class="fa fa-trophy" style="font-size:33px; color: white; background: none; padding-left: 9px; padding-top: 5px;"></i>');
+         larr[t1][t2+1] = 'green';
+         larr[t1][t2] = "none";             
+         }
+      }
+  
+  
+    }//keycode right
+
+    
+    if(event.keyCode ==38){
+       //console.log('top')
+      
+      if(larr[t1+1][t2] == 'none'){
+  if(t1+5<=199 && t1-5>=0){
+for(var x=0; x<200; x++){
+  for(var y=0; y<20; y++){
+    if( x<=t1+6 && x>=t1-5 ){             //console.log(t1)
+  $('#a'+x+'g'+y).css('display', 'inline-block');       
+    }
+    else{
+  $('#a'+x+'g'+y).css('display', 'none');      
+    }
+  }     
+}        
+      }       
+         $('#a'+t1+'g'+t2).css('background', 'none');
+         $('#a'+t1+'g'+t2).html('');        
+         $('#a'+(t1+1)+'g'+t2).css('background', 'green');
+         $('#a'+(t1+1)+'g'+t2).html('<i class="fa fa-trophy" style="font-size:33px; color: white; background: none; padding-left: 9px; padding-top: 5px;"></i>');
+         larr[t1+1][t2] = 'green';
+         larr[t1][t2] = "none";   
+      } 
+      
+else if(t1!=199 &&(larr[t1+1][t2] == 'cert1' || larr[t1+1][t2] == 'cert2' || larr[t1+1][t2] == 'cert3') ){
+        if(this.state.skills!=25){
+          $('.top').html('<p>Sorry, you haven\'t obtained the necessary skills yet!</p>');
+          if($('.sound').html()=='Sound On'){          
+            $('#audio4')[0].play();
+          }
+        var hp= (parseInt(this.state.HP)- Math.random()*10*400).toFixed(2);
+        this.setState({HP:hp})                   
+         if(hp<0){
+           $('#mess1').css('display','block');
+    this.setState({level:1, HP: 5000, exp: 0, att:50, cert:0, skills:0, skills2:[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0], cert2: [0,0,0],message:["Welcome to the Dungeon Crawler Game"], layout: larr, tp: tp, bp: bp, count: 0}) 
+           
+         }        
+        }else{
+          
+  if(t1+5<=199 && t1-5>=0){
+for(var x=0; x<200; x++){
+  for(var y=0; y<20; y++){
+    if( x<=t1+6 && x>=t1-5 ){             //console.log(t1)
+  $('#a'+x+'g'+y).css('display', 'inline-block');       
+    }
+    else{
+  $('#a'+x+'g'+y).css('display', 'none');      
+    }
+  }     
+}        
+      }       
+          
+var word=larr[t1+1][t2];
+var num= word.match(/\d/gi);
+num=parseInt(num.join(''));   
+          
+        var ski= this.state.cert2;
+        ski[num-1]+=1;          
+          
+        if(ski[num-1]==3){
+          $('.top').html('<p>Congratulations, you have obtained the following certification: '+ansa[num-1]+"!</p>");
+          if($('.sound').html()=='Sound On'){          
+            $('#audio3')[0].play();
+          }
+        }else{
+          $('.top').html('<p>You are '+(3-ski[num-1])+" step(s) away from a certification!</p>");
+          if($('.sound').html()=='Sound On'){          
+            $('#audio2')[0].play();
+          }
+        }
+          
+        this.setState({eskills2: ski, cert: parseInt(this.state.cert)+1, exp: parseInt(this.state.exp)+5, att: (parseInt(this.state.att)+Math.random()*1000).toFixed(2),level:parseInt(this.state.level)+1})         
+
+         $('#a'+t1+'g'+t2).css('background', 'none');
+         $('#a'+t1+'g'+t2).html('');        
+         $('#a'+(t1+1)+'g'+t2).css('background', 'green');
+         $('#a'+(t1+1)+'g'+t2).html('<i class="fa fa-trophy" style="font-size:33px; color: white; background: none; padding-left: 9px; padding-top: 5px;"></i>');
+         larr[t1+1][t2] = 'green';
+         larr[t1][t2] = "none";          
+        }
+
+      }  
+  
+      else if(t1!=199 &&(larr[t1+1][t2] == 'skill1' || larr[t1+1][t2] == 'skill2' || larr[t1+1][t2] == 'skill3' || larr[t1+1][t2] == 'skill4' || larr[t1+1][t2] == 'skill5' || larr[t1+1][t2] == 'skill6' || larr[t1+1][t2] == 'skill7' || larr[t1+1][t2] == 'skill8' || larr[t1+1][t2] == 'skill9' || larr[t1+1][t2] == 'skill10' || larr[t1+1][t2] == 'skill11' || larr[t1+1][t2] == 'skill12' || larr[t1+1][t2] == 'skill13' || larr[t1+1][t2] == 'skill14' || larr[t1+1][t2] == 'skill15' || larr[t1+1][t2] == 'skill16' || larr[t1+1][t2] == 'skill17' || larr[t1+1][t2] == 'skill18' || larr[t1+1][t2] == 'skill19' || larr[t1+1][t2] == 'skill20' || larr[t1+1][t2] == 'skill21' || larr[t1+1][t2] == 'skill22' || larr[t1+1][t2] == 'skill23' || larr[t1+1][t2] == 'skill24'  || larr[t1+1][t2] == 'skill25') ){
+        
+  if(t1+5<=199 && t1-5>=0){
+for(var x=0; x<200; x++){
+  for(var y=0; y<20; y++){
+    if( x<=t1+6 && x>=t1-5 ){             //console.log(t1)
+  $('#a'+x+'g'+y).css('display', 'inline-block');       
+    }
+    else{
+  $('#a'+x+'g'+y).css('display', 'none');      
+    }
+  }     
+}        
+      }
+        
+var word=larr[t1+1][t2];
+var num= word.match(/\d/gi);
+num=parseInt(num.join(''));
+    $('.top').html('<p>Congratulations, you accomplished Skill '+(num)+"!</p>");
+    if($('.sound').html()=='Sound On'){          
+      $('#audio2')[0].play();
+    }
+        var ski= this.state.skills2;
+        ski[num-1]= 3;
+        this.setState({skills2: ski, skills: parseInt(this.state.skills)+1, exp: parseInt(this.state.exp)+1, att: (parseInt(this.state.att)+Math.random()*1000).toFixed(2), level:parseInt(this.state.level)+1})
+        
+         $('#a'+t1+'g'+t2).css('background', 'none');
+         $('#a'+t1+'g'+t2).html('');        
+         $('#a'+(t1+1)+'g'+t2).css('background', 'green');
+         $('#a'+(t1+1)+'g'+t2).html('<i class="fa fa-trophy" style="font-size:33px; color: white; background: none; padding-left: 9px; padding-top: 5px;"></i>');
+         larr[t1+1][t2] = 'green';
+         larr[t1][t2] = "none";        
+      }  
+      else if(t1!=199 &&(larr[t1+1][t2] == 'yellow')){
+         if(this.state.skills!=25 && this.state.cert != 9){
+     $('.top').html('<p>You are not qualified yet to take on the boss!</p>');
+          if($('.sound').html()=='Sound On'){          
+            $('#audio4')[0].play();
+          }
+         }
+         else{
+  if(t1+5<=199 && t1-5>=0){
+for(var x=0; x<200; x++){
+  for(var y=0; y<20; y++){
+    if( x<=t1+6 && x>=t1-5 ){             //console.log(t1)
+  $('#a'+x+'g'+y).css('display', 'inline-block');       
+    }
+    else{
+  $('#a'+x+'g'+y).css('display', 'none');      
+    }
+  }     
+}        
+      }           
+           
+        $('.top').html('<p>You win!</p>');
+        $('#mess2').css('display','block');           
+               this.setState({level:1, HP: 5000, exp: 0, att:50, cert:0, skills:0, skills2:[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0], cert2: [0,0,0],message:["Welcome to the Dungeon Crawler Game"], layout: larr, tp: tp, bp: bp, count: 0}) 
+           
+         $('#a'+t1+'g'+t2).css('background', 'none');
+         $('#a'+t1+'g'+t2).html('');        
+         $('#a'+(t1+1)+'g'+t2).css('background', 'green');
+         $('#a'+(t1+1)+'g'+t2).html('<i class="fa fa-trophy" style="font-size:33px; color: white; background: none; padding-left: 9px; padding-top: 5px;"></i>');
+         larr[t1+1][t2] = 'green';
+         larr[t1][t2] = "none";          
+         }
+      }      
+        
+      
+    }//top keycode
+ 
+    
+     if(event.keyCode ==40){
+       //console.log('bottom')
+
+       if(larr[t1-1][t2] == 'none'){         
+     if(t1+5<=199 && t1-5>0){
+for(var x=0; x<200; x++){
+  for(var y=0; y<20; y++){
+    if( x<=t1+5 && x>=t1-6 ){
+  $('#a'+x+'g'+y).css('display', 'inline-block');       
+    }
+    else{
+  $('#a'+x+'g'+y).css('display', 'none');      
+    }
+  }     
+}        
+      }
+         $('#a'+t1+'g'+t2).css('background', 'none')
+         $('#a'+t1+'g'+t2).html('')        
+         $('#a'+(t1-1)+'g'+t2).css('background', 'green')
+         $('#a'+(t1-1)+'g'+t2).html('<i class="fa fa-trophy" style="font-size:33px; color: white; background: none; padding-left: 9px; padding-top: 5px;"></i>')          
+         larr[t1-1][t2] = 'green';
+         larr[t1][t2] = "none";  
+        }        
+      
+
+       
+       
+       
+else if(t1!=199 &&(larr[t1-1][t2] == 'cert1' || larr[t1-1][t2] == 'cert2' || larr[t1-1][t2] == 'cert3') ){
+        if(this.state.skills!=25){
+          $('.top').html('<p>Sorry, you haven\'t obtained the necessary skills yet!</p>');
+          if($('.sound').html()=='Sound On'){          
+            $('#audio4')[0].play();
+          }
+        var hp= (parseInt(this.state.HP)- Math.random()*10*400).toFixed(2);
+        this.setState({HP:hp})                   
+         if(hp<0){
+           $('#mess1').css('display','block');
+    this.setState({level:1, HP: 5000, exp: 0, att:50, cert:0, skills:0, skills2:[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0], cert2: [0,0,0],message:["Welcome to the Dungeon Crawler Game"], layout: larr, tp: tp, bp: bp, count: 0}) 
+           
+         }        
+        }else{
+          
+  if(t1+5<=199 && t1-5>0){
+for(var x=0; x<200; x++){
+  for(var y=0; y<20; y++){
+    if( x<=t1+5 && x>=t1-6 ){
+  $('#a'+x+'g'+y).css('display', 'inline-block');       
+    }
+    else{
+  $('#a'+x+'g'+y).css('display', 'none');      
+    }
+  }     
+}        
+      }       
+          
+var word=larr[t1-1][t2];
+var num= word.match(/\d/gi);
+num=parseInt(num.join(''));   
+          
+        var ski= this.state.cert2;
+        ski[num-1]+=1;          
+          
+        if(ski[num-1]==3){
+          $('.top').html('<p>Congratulations, you have obtained the following certification: '+ansa[num-1]+"!</p>");
+          if($('.sound').html()=='Sound On'){          
+            $('#audio3')[0].play();
+          }
+        }else{
+          $('.top').html('<p>You are '+(3-ski[num-1])+" step(s) away from a certification!</p>");
+          if($('.sound').html()=='Sound On'){          
+            $('#audio2')[0].play();
+          }
+        }
+          
+        this.setState({eskills2: ski, cert: parseInt(this.state.cert)+1, exp: parseInt(this.state.exp)+5, att: (parseInt(this.state.att)+Math.random()*1000).toFixed(2),level:parseInt(this.state.level)+1})         
+
+         $('#a'+t1+'g'+t2).css('background', 'none');
+         $('#a'+t1+'g'+t2).html('');        
+         $('#a'+(t1-1)+'g'+t2).css('background', 'green');
+         $('#a'+(t1-1)+'g'+t2).html('<i class="fa fa-trophy" style="font-size:33px; color: white; background: none; padding-left: 9px; padding-top: 5px;"></i>');
+         larr[t1-1][t2] = 'green';
+         larr[t1][t2] = "none";          
+        }
+
+      }  
+  
+      else if(t1!=0 &&(larr[t1-1][t2] == 'skill1' || larr[t1-1][t2] == 'skill2' || larr[t1-1][t2] == 'skill3' || larr[t1-1][t2] == 'skill4' || larr[t1-1][t2] == 'skill5' || larr[t1-1][t2] == 'skill6' || larr[t1-1][t2] == 'skill7' || larr[t1-1][t2] == 'skill8' || larr[t1-1][t2] == 'skill9' || larr[t1-1][t2] == 'skill10' || larr[t1-1][t2] == 'skill11' || larr[t1-1][t2] == 'skill12' || larr[t1-1][t2] == 'skill13' || larr[t1-1][t2] == 'skill14' || larr[t1-1][t2] == 'skill15' || larr[t1-1][t2] == 'skill16' || larr[t1-1][t2] == 'skill17' || larr[t1-1][t2] == 'skill18' || larr[t1-1][t2] == 'skill19' || larr[t1-1][t2] == 'skill20' || larr[t1-1][t2] == 'skill21' || larr[t1-1][t2] == 'skill22' || larr[t1-1][t2] == 'skill23' || larr[t1-1][t2] == 'skill24'  || larr[t1-1][t2] == 'skill25') ){
+        
+if(t1+5<=199 && t1-5>0){
+for(var x=0; x<200; x++){
+  for(var y=0; y<20; y++){
+    if( x<=t1+5 && x>=t1-6 ){
+  $('#a'+x+'g'+y).css('display', 'inline-block');       
+    }
+    else{
+  $('#a'+x+'g'+y).css('display', 'none');      
+    }
+  }     
+}        
+      }              
+        
+var word=larr[t1-1][t2];
+var num= word.match(/\d/gi);
+num=parseInt(num.join(''));
+    $('.top').html('<p>Congratulations, you accomplished Skill '+(num)+"!</p>");
+    if($('.sound').html()=='Sound On'){          
+      $('#audio2')[0].play();
+    }
+        var ski= this.state.skills2;
+        ski[num-1]= 3;
+        this.setState({skills2: ski, skills: parseInt(this.state.skills)+1, exp: parseInt(this.state.exp)+1, att: (parseInt(this.state.att)+Math.random()*1000).toFixed(2), level:parseInt(this.state.level)+1})
+        
+         $('#a'+t1+'g'+t2).css('background', 'none');
+         $('#a'+t1+'g'+t2).html('');        
+         $('#a'+(t1-1)+'g'+t2).css('background', 'green');
+         $('#a'+(t1-1)+'g'+t2).html('<i class="fa fa-trophy" style="font-size:33px; color: white; background: none; padding-left: 9px; padding-top: 5px;"></i>');
+         larr[t1-1][t2] = 'green';
+         larr[t1][t2] = "none";        
+      }  
+      else if(t1!=199 &&(larr[t1-1][t2] == 'yellow')){
+         if(this.state.skills!=25 && this.state.cert != 9){
+     $('.top').html('<p>You are not qualified yet to take on the boss!</p>');
+          if($('.sound').html()=='Sound On'){          
+            $('#audio4')[0].play();
+          }
+         }
+         else{
+if(t1+5<=199 && t1-5>0){
+for(var x=0; x<200; x++){
+  for(var y=0; y<20; y++){
+    if( x<=t1+5 && x>=t1-6 ){
+  $('#a'+x+'g'+y).css('display', 'inline-block');       
+    }
+    else{
+  $('#a'+x+'g'+y).css('display', 'none');      
+    }
+  }     
+}        
+      }           
+           
+        $('.top').html('<p>You win!</p>');
+        $('#mess2').css('display','block');           
+               this.setState({level:1, HP: 5000, exp: 0, att:50, cert:0, skills:0, skills2:[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0], cert2: [0,0,0],message:["Welcome to the Dungeon Crawler Game"], layout: larr, tp: tp, bp: bp, count: 0}) 
+           
+         $('#a'+t1+'g'+t2).css('background', 'none');
+         $('#a'+t1+'g'+t2).html('');        
+         $('#a'+(t1-1)+'g'+t2).css('background', 'green');
+         $('#a'+(t1-1)+'g'+t2).html('<i class="fa fa-trophy" style="font-size:33px; color: white; background: none; padding-left: 9px; padding-top: 5px;"></i>');
+         larr[t1-1][t2] = 'green';
+         larr[t1][t2] = "none";          
+         }
+      }       
+       
+       
+       
+       
+       
+       
+       
+       
+    }//bottom key code
+    
+    
+  }//handleChange
+  
+componentDidMount(){
+    document.addEventListener("keydown", this.handleChange);
+  
+  
+      $(document).ready(function(){    
+      $('.top').html("<p>Welcome to the Dungeon Crawler Game</p>"); console.log('yes')
+for(var x=0; x<200; x++){
+  $('#a'+x+'g0').css('margin-left', '-40px');
+}
+      
+for(var x=12; x<200; x++){
+  for(var y=0; y<20; y++){
+  $('#a'+x+'g'+y).css('display', 'none');
+  }     
+}
+      
+      
+for(var m=0; m<200; m++){
+  for(var n=0; n<20; n++){
+    if(larr[m][n]=="me"){
+      $('#a'+m+'g'+n).css('background', 'green')
+      $('#a'+m+'g'+n).html('<i class="fa fa-trophy" style="font-size:33px; color: white; background: none; padding-left: 9px; padding-top: 5px;"></i>')
+    } 
+    if(larr[m][n]=="black"){
+      $('#a'+m+'g'+n).css('background', 'black')
+    }
+    if(larr[m][n]=="yellow"){
+      $('#a'+m+'g'+n).css('background', 'yellow')
+    }
+    if(larr[m][n]=="red"){
+      $('#a'+m+'g'+n).css('background', 'red')
+      $('#a'+m+'g'+n).html('<i class="fa fa-optin-monster" style="font-size:33px; color: white; background: none; padding-left: 9px; padding-top: 5px;"></i>')      
+    }    
+    if(larr[m][n]=="cert1"){
+      $('#a'+m+'g'+n).css('background', 'gold')  
+      $('#a'+m+'g'+n).html('<i class="fa fa-laptop" style="font-size:33px; color: black; background: none; padding-left: 9px; padding-top: 5px;"></i>')        
+    }  
+    if(larr[m][n]=="cert2"){
+      $('#a'+m+'g'+n).css('background', 'gold')  
+      $('#a'+m+'g'+n).html('<i class="fa fa-line-chart" style="font-size:33px; color: black; background: none; padding-left: 9px; padding-top: 5px;"></i>')         
+    }
+    if(larr[m][n]=="cert3"){
+      $('#a'+m+'g'+n).css('background', 'gold');
+      $('#a'+m+'g'+n).html('<i class="fa fa-server" style="font-size:33px; color: black; background: none; padding-left: 9px; padding-top: 5px;"></i>')         
+    } 
+    if(larr[m][n]=="skill25"){
+      $('#a'+m+'g'+n).css('background', 'rgb(153, 255, 204)');
+      $('#a'+m+'g'+n).html('<i class="fa fa-clone" style="font-size:33px; color: silver; background: none; padding-left: 9px; padding-top: 5px;"></i>')         
+    }  
+    if(larr[m][n]=="skill24"){
+      $('#a'+m+'g'+n).css('background', 'rgb(153, 255, 204)');
+      $('#a'+m+'g'+n).html('<i class="fa fa-codepen" style="font-size:33px; color: red; background: none; padding-left: 9px; padding-top: 5px;"></i>')         
+    }  
+    if(larr[m][n]=="skill23"){
+      $('#a'+m+'g'+n).css('background', 'rgb(153, 255, 204)');
+      $('#a'+m+'g'+n).html('<i class="fa fa-code-fork" style="font-size:33px; color: pink; background: none; padding-left: 9px; padding-top: 5px;"></i>')         
+    }  
+    if(larr[m][n]=="skill22"){
+      $('#a'+m+'g'+n).css('background', 'rgb(153, 255, 204)');
+      $('#a'+m+'g'+n).html('<i class="fa fa-cogs" style="font-size:33px; color: white; background: none; padding-left: 9px; padding-top: 5px;"></i>')         
+    }  
+    if(larr[m][n]=="skill21"){
+      $('#a'+m+'g'+n).css('background', 'rgb(153, 255, 204)');
+      $('#a'+m+'g'+n).html('<i class="fa fa-codiepie" style="font-size:33px; color: silver; background: none; padding-left: 9px; padding-top: 5px;"></i>')         
+    }  
+    if(larr[m][n]=="skill20"){
+      $('#a'+m+'g'+n).css('background', 'rgb(153, 255, 204)');
+      $('#a'+m+'g'+n).html('<i class="fa fa-connectdevelop" style="font-size:33px; color: gray; background: none; padding-left: 9px; padding-top: 5px;"></i>')         
+    }  
+    if(larr[m][n]=="skill19"){
+      $('#a'+m+'g'+n).css('background', 'rgb(153, 255, 204)');
+      $('#a'+m+'g'+n).html('<i class="fa fa-drupal" style="font-size:33px; color: white; background: none; padding-left: 9px; padding-top: 5px;"></i>')         
+    }  
+    if(larr[m][n]=="skill18"){
+      $('#a'+m+'g'+n).css('background', 'rgb(153, 255, 204)');
+      $('#a'+m+'g'+n).html('<i class="fa fa-empire" style="font-size:33px; color: blue; background: none; padding-left: 9px; padding-top: 5px;"></i>')         
+    }  
+    if(larr[m][n]=="skill17"){
+      $('#a'+m+'g'+n).css('background', 'rgb(153, 255, 204)');
+      $('#a'+m+'g'+n).html('<i class="fa fa-fire" style="font-size:33px; color: green; background: none; padding-left: 9px; padding-top: 5px;"></i>')         
+    }  
+    if(larr[m][n]=="skill16"){
+      $('#a'+m+'g'+n).css('background', 'rgb(153, 255, 204)');
+      $('#a'+m+'g'+n).html('<i class="fa fa-eye" style="font-size:33px; color: orange; background: none; padding-left: 9px; padding-top: 5px;"></i>')         
+    }  
+    if(larr[m][n]=="skill15"){
+      $('#a'+m+'g'+n).css('background', 'rgb(153, 255, 204)');
+      $('#a'+m+'g'+n).html('<i class="fa fa-feed" style="font-size:33px; color: red; background: none; padding-left: 9px; padding-top: 5px;"></i>')         
+    }  
+    if(larr[m][n]=="skill14"){
+      $('#a'+m+'g'+n).css('background', 'rgb(153, 255, 204)');
+      $('#a'+m+'g'+n).html('<i class="fa fa-git" style="font-size:33px; color: brown; background: none; padding-left: 9px; padding-top: 5px;"></i>')         
+    }  
+    if(larr[m][n]=="skill13"){
+      $('#a'+m+'g'+n).css('background', 'rgb(153, 255, 204)');
+      $('#a'+m+'g'+n).html('<i class="fa fa-group" style="font-size:33px; color: redorange; background: none; padding-left: 9px; padding-top: 5px;"></i>')         
+    }  
+    if(larr[m][n]=="skill12"){
+      $('#a'+m+'g'+n).css('background', 'rgb(153, 255, 204)');
+      $('#a'+m+'g'+n).html('<i class="fa fa-h-square" style="font-size:33px; color: indigo; background: none; padding-left: 9px; padding-top: 5px;"></i>')         
+    }  
+    if(larr[m][n]=="skill11"){
+      $('#a'+m+'g'+n).css('background', 'rgb(153, 255, 204)');
+      $('#a'+m+'g'+n).html('<i class="fa fa-linux" style="font-size:33px; color: maroon; background: none; padding-left: 9px; padding-top: 5px;"></i>')         
+    }  
+    if(larr[m][n]=="skill10"){
+      $('#a'+m+'g'+n).css('background', 'rgb(153, 255, 204)');
+      $('#a'+m+'g'+n).html('<i class="fa fa-joomla" style="font-size:33px; color: tan; background: none; padding-left: 9px; padding-top: 5px;"></i>')         
+    }  
+    if(larr[m][n]=="skill9"){
+      $('#a'+m+'g'+n).css('background', 'rgb(153, 255, 204)');
+      $('#a'+m+'g'+n).html('<i class="fa fa-openid" style="font-size:33px; color: navy; background: none; padding-left: 9px; padding-top: 5px;"></i>')         
+    }  
+    if(larr[m][n]=="skill8"){
+      $('#a'+m+'g'+n).css('background', 'rgb(153, 255, 204)');
+      $('#a'+m+'g'+n).html('<i class="fa fa-opera" style="font-size:33px; color: pink; background: none; padding-left: 9px; padding-top: 5px;"></i>')         
+    }  
+    if(larr[m][n]=="skill7"){
+      $('#a'+m+'g'+n).css('background', 'rgb(153, 255, 204)');
+      $('#a'+m+'g'+n).html('<i class="fa fa-paw" style="font-size:33px; color: purple; background: none; padding-left: 9px; padding-top: 5px;"></i>')         
+    }  
+    if(larr[m][n]=="skill6"){
+      $('#a'+m+'g'+n).css('background', 'rgb(153, 255, 204)');
+      $('#a'+m+'g'+n).html('<i class="fa fa-renren" style="font-size:33px; color: blue; background: none; padding-left: 9px; padding-top: 5px;"></i>')         
+    }  
+    if(larr[m][n]=="skill5"){
+      $('#a'+m+'g'+n).css('background', 'rgb(153, 255, 204)');
+      $('#a'+m+'g'+n).html('<i class="fa fa-rocket" style="font-size:33px; color: yellow; background: none; padding-left: 9px; padding-top: 5px;"></i>')         
+    }  
+    if(larr[m][n]=="skill4"){
+      $('#a'+m+'g'+n).css('background', 'rgb(153, 255, 204)');
+      $('#a'+m+'g'+n).html('<i class="fa fa-road" style="font-size:33px; color: red; background: none; padding-left: 9px; padding-top: 5px;"></i>')         
+    }  
+    if(larr[m][n]=="skill3"){
+      $('#a'+m+'g'+n).css('background', 'rgb(153, 255, 204)');
+      $('#a'+m+'g'+n).html('<i class="fa fa-sellsy" style="font-size:33px; color: orange; background: none; padding-left: 9px; padding-top: 5px;"></i>')         
+    }  
+    if(larr[m][n]=="skill2"){
+      $('#a'+m+'g'+n).css('background', 'rgb(153, 255, 204)');
+      $('#a'+m+'g'+n).html('<i class="fa fa-send" style="font-size:33px; color: silver; background: none; padding-left: 9px; padding-top: 5px;"></i>')         
+    }  
+    if(larr[m][n]=="skill1"){
+      $('#a'+m+'g'+n).css('background', 'rgb(153, 255, 204)');
+      $('#a'+m+'g'+n).html('<i class="fa fa-shekel" style="font-size:33px; color: gray; background: none; padding-left: 9px; padding-top: 5px;"></i>')         
+    }  
+     
+  }
+}
+
+window.addEventListener("keydown", function(e) {
+    // space and arrow keys
+    if([32, 37, 38, 39, 40].indexOf(e.keyCode) > -1) {
+        e.preventDefault();
+    }
+}, false);    
+      
+      
+    })
+  
+}  
+   
+  render(){
+      $(document).ready(function(){    
+window.addEventListener("keydown", function(e) {
+    // space and arrow keys
+    if([32, 37, 38, 39, 40].indexOf(e.keyCode) > -1) {
+        e.preventDefault();
+    }
+}, false); 
+      })
+
+    return(
+    <div>
+      <div className="back"></div>
+      <div className="top">
+     
+      </div>
+      <div className="left">
+      <h2>Player Stats</h2>
+      <p className="a">Level: {this.state.level}</p>
+      <p className="a">HP: <me id="me">{this.state.HP}</me></p>
+      <p className="a">Experience: {this.state.exp}</p>
+      <p className="a">Attack: {this.state.att}</p>
+      
+      <p id="cert">Certifications: {Math.floor(this.state.cert/3)}/3</p>
+     {this.state.cert2[0]==3 || this.state.cert2[1]==3 || this.state.cert2[2]==3 ?<p className="c">{this.state.cert2[0]==3? <i className="fa fa-laptop"></i>: ''} {this.state.cert2[1]==3? <i className="fa fa-line-chart"></i>: ''} {this.state.cert2[2]==3? <i className="fa fa-server"></i>: ''}</p> : ''}
+      <p className="skills" id="skills">Skills: {this.state.skills}/25</p>
+           {this.state.skills2[0]==3 || this.state.skills2[1]==3 || this.state.skills2[2]==3 || this.state.skills2[3]==3 || this.state.skills2[4]==3 || this.state.skills2[5]==3 || this.state.skills2[6]==3 || this.state.skills2[7]==3 || this.state.skills2[8]==3 || this.state.skills2[9]==3 || this.state.skills2[10]==3 || this.state.skills2[11]==3 || this.state.skills2[12]==3 || this.state.skills2[13]==3 || this.state.skills2[14]==3 || this.state.skills2[15]==3 || this.state.skills2[16]==3 || this.state.skills2[17]==3 || this.state.skills2[18]==3 || this.state.skills2[19]==3 || this.state.skills2[20]==3 || this.state.skills2[21]==3 || this.state.skills2[22]==3 || this.state.skills2[23]==3 || this.state.skills2[24]==3 || this.state.skills2[25]==3 ? <p className="skills2">
+ {this.state.skills2[0]==3? <i className="fa fa-shekel"></i>: ''} {this.state.skills2[1]==3? <i className="fa fa-send"></i>: ''} {this.state.skills2[2]==3? <i className="fa fa-sellsy"></i>: ''} {this.state.skills2[3]==3? <i className="fa fa-road"></i>: ''} {this.state.skills2[4]==3? <i className="fa fa-rocket"></i>: ''} {this.state.skills2[5]==3? <i className="fa fa-renren"></i>: ''} {this.state.skills2[6]==3? <i className="fa fa-paw"></i>: ''} {this.state.skills2[7]==3? <i className="fa fa-opera"></i>: ''} {this.state.skills2[8]==3? <i className="fa fa-openid"></i>: ''} {this.state.skills2[9]==3? <i className="fa fa-joomla"></i>: ''} {this.state.skills2[10]==3? <i className="fa fa-linux"></i>: ''} {this.state.skills2[11]==3? <i className="fa fa-h-square"></i>: ''} {this.state.skills2[12]==3? <i className="fa fa-group"></i>: ''} {this.state.skills2[13]==3? <i className="fa fa-git"></i>: ''} {this.state.skills2[14]==3? <i className="fa fa-feed"></i>: ''} {this.state.skills2[15]==3? <i className="fa fa-eye"></i>: ''} {this.state.skills2[16]==3? <i className="fa fa-fire"></i>: ''} {this.state.skills2[17]==3? <i className="fa fa-empire"></i>: ''} {this.state.skills2[18]==3? <i className="fa fa-drupal"></i>: ''} {this.state.skills2[19]==3? <i className="fa fa-connectdevelop"></i>: ''} {this.state.skills2[20]==3? <i className="fa fa-codiepie"></i>: ''} {this.state.skills2[21]==3? <i className="fa fa-cogs"></i>: ''} {this.state.skills2[22]==3? <i className="fa fa-code-fork"></i>: ''} {this.state.skills2[23]==3? <i className="fa fa-codepen"></i>: ''} {this.state.skills2[24]==3? <i className="fa fa-clone"></i>: ''} 
+             
+             </p> :''}
+      <br/><br/>
+      <p className="sound" id="sound">Sound Off</p>
+      
+      </div>
+      
+      <div id="main" onKeyDown={e=>this.handleChange(e)}> 
+        
+       <ul>
+     {arr.map(function(val, index){return(<div className={"row"+index}> {arr[index].map(function(x,i){return(<li className="grids" id={"a"+(199-index)+"g"+i}></li>
+                                    )}
+                                    )}</div>)}
+                                    )}         
+       </ul>
+
+      
+          
+      
+      
+      
+      </div>
+      
+    </div>
+    )
+  }
+}
+
+ReactDOM.render(<MyC />, document.getElementById('inside'))
+  </script>
+  <script>
+    $(document).ready(function(){
+      $('.trophy2').on('click', function(){
+        $('#intro').css('display','none');
+        $('#inside').css('display','block');
+      })
+      $('#b1').on('click', function(){
+        $('#intro').css('display','none');
+        $('#inside').css('display','block');
+        $('#mess1').css('display','none');
+        $('#mess2').css('display','none');        
+      })
+      $('#b2').on('click', function(){
+        $('#intro').css('display','none');
+        $('#inside').css('display','block');
+        $('#mess1').css('display','none');
+        $('#mess2').css('display','none');        
+      })
+      $('#sound').on('click', function(){
+        if($('.sound').html()=='Sound Off'){
+          $('.sound').html('Sound On');
+          $('#audio1')[0].play();          
+        }
+        else{
+          $('.sound').html('Sound Off');
+        }
+      })      
+    })
+  </script>
+  <script>
+    function myF3(){
+      location.reload();
+    }
+  </script>
+</head>
+<body>
+  <div id="intro">
+    <h1>Dungeon Crawler Form</h1>
+    <p>
+      Three certifications stand between you and the final boss. Each certification requires you to master 5 projects, each is harder than the last. You will recognize the projects because they look like this:
+    </p>
+    <p class="icons">
+      <i class="fa fa-laptop first"></i>  <i class="fa fa-line-chart second"></i>  <i class="fa fa-server third"></i> 
+    </p>
+    <p class="icons2">
+      Front End - Data Viz - Back End
+    </p>    
+    <p>
+Collect tech skill items to level up your coding skills. Be careful, don't attempt the challenges without leveling up your skills. You can move with the arrow keys. If you think you are ready, click the logo below to begin.    
+    </p>
+    <p class="begin" style="font-size:80px;">
+      <i class="fa fa-trophy trophy2"></i>
+    </p>
+  </div>
+  <div id="inside"></div>
+  <div id="mess1"><p>You have</p> <p>been defeated</p> <br /> <button id="b1" onclick="myF3()">Start Over?</button></div>
+  <div id="mess2"><p>You are</p> <p>victorious!</p> <br /> <button id="b2" onclick="myF3()">Start Over?</button></div> 
+  <audio id="audio1" controls src="https://s3.amazonaws.com/freecodecamp/simonSound1.mp3" type="audio/mpeg" />
+  <audio id="audio2" src="https://s3.amazonaws.com/freecodecamp/simonSound2.mp3" type="audio/mpeg" />
+  <audio id="audio3" src="https://s3.amazonaws.com/freecodecamp/simonSound3.mp3" type="audio/mpeg" />
+  <audio id="audio4" src="https://s3.amazonaws.com/freecodecamp/simonSound4.mp3" type="audio/mpeg" />
+</body>
+</html>
